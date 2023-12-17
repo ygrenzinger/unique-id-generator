@@ -28,7 +28,7 @@ If we want an auditable log, we need to store it in a centralised persistent sto
 
 To maximise write performance, the best way is to use a append only strategy on a durable file storage (with some replication). By the way, using mechanical disk is perfect for this use case :)
 
-With the current need described, the easiest solution could be object storage like S3 because it's very simple, durable and should meet the write performance requirements. There is Open Source solutions like [Ceph](https://ceph.io/en/) for On Promise. The file would change every days. It's basically what I am doing in my abstract datastore.
+With the current need described, the easiest solution could be a replicated file storage lbecause it's very simple, durable and should meet the write performance requirements. There is Open Source solutions like [Ceph](https://ceph.io/en/) for On Promise. The file would change every days. It's basically what I am doing in my abstract datastore.
 
 
 Others solutions:
