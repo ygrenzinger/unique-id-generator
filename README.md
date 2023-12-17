@@ -25,9 +25,12 @@ You can run the main class using: `mvn compile exec:java -Dexec.mainClass="App" 
 
 Generating unique ids is a write heavy operation.
 If we want an auditable log, we need to store it in a centralised persistent storage.
-A streaming platform like Kafka is a good candidate for this use case.
-We can use a Kafka topic and use consumer to consolidate the ids by the end of day with a batch job and store aggregation by day in durable file storage like S3.
 
-Other solutions could be :
-- to use a database like Cassandra or ScyllaDB that are optimised for write heavy operations.
-- to directly write into a durable file storage using the current day as file path (this close to the local file storage I use in the abstract store).
+To maximise write performance, the best way is to use a append only strategy on a durable file storage (with some replication). 
+
+With the current need described, the easiest solution could be object storage like S3 because it's very simple, durable and should meet the write performance requirements. There is Open Source solutions like [Ceph](https://ceph.io/en/) for On Promise. The file would change every days. It's basically what I am doing in my abstract datastore.
+
+
+Others solutions:
+- A streaming platform like Kafka. We could then use consumers to read the topic and, for example, consolidate IDs by day.
+- A write heavy NoSQL database like Cassandra or ScyllaDB could also maybe a solution but I am less knowledgeable for the querying part and read the data "by day"  
